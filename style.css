@@ -237,11 +237,12 @@ footer {
 
 /* Tampilan Foto Profil */
 .profile-img {
-    width: 150px;
-    height: 150px;
+    width: 180px;
+    height: 180px;
     border-radius: 50%; /* Membuat foto jadi lingkaran */
     object-fit: cover;
+    display: block;
     border: 3px solid #38bdf8; /* Garis tepi biru neon */
-    margin-bottom: 20px;
+    margin: 0 auto 20px auto;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
