@@ -19,7 +19,7 @@
                 <ul>
                     <li><a href="#tentang">Tentang</a></li>
                     <li><a href="#keahlian">Keahlian</a></li>
-                    <li><a href="#foto">Foto</a></li>
+                    <li><a href="#foto" onclick="bukaFoto()">Foto</a></li>
                     <li><a href="#pengalaman">Pengalaman</a></li>
                     <li><a href="#proyek">Proyek & Troubleshooting</a></li>
                     <li><a href="#kontak" class="btn-nav">Kontak</a></li>
@@ -29,7 +29,7 @@
     </header>
 
     <!-- Hero Section -->
-    <section class="hero">
+    <section id="tentang" class="hero">
         <div class="container">
             <img src="MYFoto.JPG" alt="Tri Tubagus Maulana Ishak" class="profile-img">
             <h2>My Name <span class="highlight">Tri Tubagus Maulana Ishak</span></h2>
@@ -66,7 +66,7 @@
     </section>
 
 <!-- Section Galeri Foto -->
-<section id="foto" class="gallery-section">
+<section id="foto" class="gallery-section" style="display: none;">
     <div class="container">
         <h2>Galeri <span class="highlight">Kegiatan</span></h2>
 
@@ -147,5 +147,16 @@
         </div>
     </footer>
 
+    <script>
+    function bukaFoto() {
+        // 1. Memunculkan bagian galeri foto
+        document.getElementById('foto').style.display = 'block';
+        
+        // 2. Menyembunyikan halaman depan (Tentang)
+        // Pastikan bagian profil atas Anda sudah ditambahkan id="tentang"
+        document.getElementById('tentang').style.display = 'none';
+    }
+</script>
+    
 </body>
 </html>
