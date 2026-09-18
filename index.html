@@ -17,11 +17,11 @@
             <h1 class="logo">Tri Tubagus<span>@ITSupport</span></h1>
             <nav>
                 <ul>
-                    <li><a href="#tentang">Tentang</a></li>
-                    <li><a href="#keahlian">Keahlian</a></li>
+                    <li><a href="#tentang" onclick="bukaTentang()">Tentang</a></li>
+                    <li><a href="#keahlian" onclick="bukaKeahlian()">Keahlian</a></li>
                     <li><a href="#foto" onclick="bukaFoto()">Foto</a></li>
-                    <li><a href="#pengalaman">Pengalaman</a></li>
-                    <li><a href="#proyek">Proyek & Troubleshooting</a></li>
+                    <li><a href="#pengalaman" onclick="bukaPengalaman()">Pengalaman</a></li>
+                    <li><a href="#proyek" onclick="bukaProyekTroubleshooting()">Proyek & Troubleshooting</a></li>
                     <li><a href="#kontak" class="btn-nav">Kontak</a></li>
                 </ul>
             </nav>
@@ -147,15 +147,33 @@
         </div>
     </footer>
 
-    <script>
+<script>
+    // 1. Fungsi untuk kembali ke halaman awal (Tentang & Kontak)
+    function bukaTentang() {
+        document.getElementById('tentang').style.display = 'block';
+        
+        // Sembunyikan bagian lainnya
+        document.getElementById('foto').style.display = 'none';
+        if(document.getElementById('keahlian')) document.getElementById('keahlian').style.display = 'none';
+        if(document.getElementById('pengalaman')) document.getElementById('pengalaman').style.display = 'none';
+        if(document.getElementById('proyek')) document.getElementById('proyek').style.display = 'none';
+    }
+
+    // 2. Fungsi untuk menampilkan galeri Foto saja
     function bukaFoto() {
-        // 1. Memunculkan bagian galeri foto
         document.getElementById('foto').style.display = 'block';
         
-        // 2. Menyembunyikan halaman depan (Tentang)
-        // Pastikan bagian profil atas Anda sudah ditambahkan id="tentang"
+        // Sembunyikan bagian lainnya
         document.getElementById('tentang').style.display = 'none';
+        if(document.getElementById('keahlian')) document.getElementById('keahlian').style.display = 'none';
+        if(document.getElementById('pengalaman')) document.getElementById('pengalaman').style.display = 'none';
+        if(document.getElementById('proyek')) document.getElementById('proyek').style.display = 'none';
     }
+
+    // 3. Perintah otomatis saat website pertama kali dibuka
+    window.onload = function() {
+        bukaTentang();
+    };
 </script>
     
 </body>
