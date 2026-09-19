@@ -73,12 +73,12 @@
 
         <div class="gallery-grid">
             <!-- Ubah src sesuai dengan nama file foto kegiatanmu yang sudah diunggah ke GitHub -->
-            <img src="galeri/kegiatan1.jpeg" alt="Kegiatan 1">
-            <img src="galeri/kegiatan2.jpeg" alt="Kegiatan 2">
-            <img src="galeri/kegiatan3.jpeg" alt="Kegiatan 3">
-            <img src="galeri/kegiatan4.jpeg" alt="Kegiatan 4">
-            <img src="galeri/kegiatan5.jpeg" alt="Kegiatan 5">
-            <img src="galeri/kegiatan6.jpeg" alt="Kegiatan 6">
+            <img src="galeri/kegiatan1.jpeg" alt="Kegiatan 1" onclick="zoomFoto(this.src)" style="cursor: pointer;">
+            <img src="galeri/kegiatan2.jpeg" alt="Kegiatan 2" onclick="zoomFoto(this.src)" style="cursor: pointer;">
+            <img src="galeri/kegiatan3.jpeg" alt="Kegiatan 3" onclick="zoomFoto(this.src)" style="cursor: pointer;">
+            <img src="galeri/kegiatan4.jpeg" alt="Kegiatan 4" onclick="zoomFoto(this.src)" style="cursor: pointer;">
+            <img src="galeri/kegiatan5.jpeg" alt="Kegiatan 5" onclick="zoomFoto(this.src)" style="cursor: pointer;">
+            <img src="galeri/kegiatan6.jpeg" alt="Kegiatan 6" onclick="zoomFoto(this.src)" style="cursor: pointer;">
         </div>
     </div>
 </section>
@@ -188,7 +188,21 @@
     window.onload = function() {
         bukaHalaman('tentang');
     };
+    function zoomFoto(src) {
+        document.getElementById("imgZoom").src = src;
+        document.getElementById("modalZoom").style.display = "block";
+    }
+
+    function tutupZoom() {
+        document.getElementById("modalZoom").style.display = "none";
+    }
 </script>
+
+    <!-- Modal Zoom Foto -->
+<div id="modalZoom" class="modal-zoom" onclick="tutupZoom()">
+    <span class="tombol-tutup">&times;</span>
+    <img id="imgZoom" class="modal-content">
+</div>
     
 </body>
 </html>
