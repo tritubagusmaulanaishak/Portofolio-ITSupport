@@ -22,6 +22,7 @@
                     <li><a href="#foto" onclick="bukaFoto()">Foto</a></li>
                     <li><a href="#pengalaman" onclick="bukaPengalaman()">Pengalaman</a></li>
                     <li><a href="#proyek" onclick="bukaProyekTroubleshooting()">Proyek & Troubleshooting</a></li>
+                    <li><a href="#sertifikat" onclick="bukaSertifikat()">Sertifikat</a></li>
                     <li><a href="#kontak" class="btn-nav">Kontak</a></li>
                 </ul>
             </nav>
@@ -117,7 +118,7 @@
     </section>
 
     <!-- Sertifikasi (Opsional tetapi Sangat Bagus untuk IT) -->
-    <section class="cert-section">
+    <section id="sertifikat" class="cert-section" style="display: none;">
         <div class="container">
             <h2 class="section-title">Sertifikasi Profesional</h2>
             <ul class="cert-list">
@@ -148,29 +149,47 @@
     </footer>
 
 <script>
-    // 1. Fungsi untuk kembali ke halaman awal (Tentang & Kontak)
+    // 1. Fungsi untuk kembali ke halaman Tentang
     function bukaTentang() {
         document.getElementById('tentang').style.display = 'block';
         
-        // Sembunyikan bagian lainnya
-        document.getElementById('foto').style.display = 'none';
-        if(document.getElementById('keahlian')) document.getElementById('keahlian').style.display = 'none';
-        if(document.getElementById('pengalaman')) document.getElementById('pengalaman').style.display = 'none';
-        if(document.getElementById('proyek')) document.getElementById('proyek').style.display = 'none';
-    }
-
-    // 2. Fungsi untuk menampilkan galeri Foto saja
-    function bukaFoto() {
-        document.getElementById('foto').style.display = 'block';
+        // Sembunyikan yang lain
+        if(document.getElementById('foto')) document.getElementById('foto').style.display = 'none';
+        if(document.getElementById('sertifikat')) document.getElementById('sertifikat').style.display = 'none';
         
-        // Sembunyikan bagian lainnya
-        document.getElementById('tentang').style.display = 'none';
+        // Sembunyikan menu lain jika sudah diberi ID
         if(document.getElementById('keahlian')) document.getElementById('keahlian').style.display = 'none';
         if(document.getElementById('pengalaman')) document.getElementById('pengalaman').style.display = 'none';
         if(document.getElementById('proyek')) document.getElementById('proyek').style.display = 'none';
     }
 
-    // 3. Perintah otomatis saat website pertama kali dibuka
+    // 2. Fungsi untuk menampilkan galeri Foto
+    function bukaFoto() {
+        if(document.getElementById('foto')) document.getElementById('foto').style.display = 'block';
+        
+        // Sembunyikan yang lain
+        document.getElementById('tentang').style.display = 'none';
+        if(document.getElementById('sertifikat')) document.getElementById('sertifikat').style.display = 'none';
+        
+        if(document.getElementById('keahlian')) document.getElementById('keahlian').style.display = 'none';
+        if(document.getElementById('pengalaman')) document.getElementById('pengalaman').style.display = 'none';
+        if(document.getElementById('proyek')) document.getElementById('proyek').style.display = 'none';
+    }
+
+    // 3. Fungsi BARU untuk menampilkan Sertifikat
+    function bukaSertifikat() {
+        if(document.getElementById('sertifikat')) document.getElementById('sertifikat').style.display = 'block';
+        
+        // Sembunyikan yang lain
+        document.getElementById('tentang').style.display = 'none';
+        if(document.getElementById('foto')) document.getElementById('foto').style.display = 'none';
+        
+        if(document.getElementById('keahlian')) document.getElementById('keahlian').style.display = 'none';
+        if(document.getElementById('pengalaman')) document.getElementById('pengalaman').style.display = 'none';
+        if(document.getElementById('proyek')) document.getElementById('proyek').style.display = 'none';
+    }
+
+    // Perintah otomatis saat website pertama kali dibuka
     window.onload = function() {
         bukaTentang();
     };
