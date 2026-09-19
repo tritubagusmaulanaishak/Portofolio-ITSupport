@@ -17,12 +17,12 @@
             <h1 class="logo">Tri Tubagus<span>@ITSupport</span></h1>
             <nav>
                 <ul>
-                    <li><a href="#tentang" onclick="bukaTentang()">Tentang</a></li>
-                    <li><a href="#keahlian" onclick="bukaKeahlian()">Keahlian</a></li>
-                    <li><a href="#foto" onclick="bukaFoto()">Foto</a></li>
-                    <li><a href="#pengalaman" onclick="bukaPengalaman()">Pengalaman</a></li>
-                    <li><a href="#proyek" onclick="bukaProyekTroubleshooting()">Proyek & Troubleshooting</a></li>
-                    <li><a href="#sertifikat" onclick="bukaSertifikat()">Sertifikat</a></li>
+                    <li><a href="#tentang" onclick="bukaHalaman('tentang')">Tentang</a></li>
+                    <li><a href="#keahlian" onclick="bukaHalaman('keahlian')">Keahlian</a></li>
+                    <li><a href="#foto" onclick="bukaHalaman('foto')">Foto</a></li>
+                    <li><a href="#pengalaman" onclick="bukaHalaman('pengalaman')">Pengalaman</a></li>
+                    <li><a href="#proyek" onclick="bukaHalaman('proyek')">Proyek &amp; Troubleshooting</a></li>
+                    <li><a href="#sertifikat" onclick="bukaHalaman('sertifikat')">Sertifikat</a></li>
                     <li><a href="#kontak" class="btn-nav">Kontak</a></li>
                 </ul>
             </nav>
@@ -149,49 +149,23 @@
     </footer>
 
 <script>
-    // 1. Fungsi untuk kembali ke halaman Tentang
-    function bukaTentang() {
-        document.getElementById('tentang').style.display = 'block';
-        
-        // Sembunyikan yang lain
-        if(document.getElementById('foto')) document.getElementById('foto').style.display = 'none';
-        if(document.getElementById('sertifikat')) document.getElementById('sertifikat').style.display = 'none';
-        
-        // Sembunyikan menu lain jika sudah diberi ID
-        if(document.getElementById('keahlian')) document.getElementById('keahlian').style.display = 'none';
-        if(document.getElementById('pengalaman')) document.getElementById('pengalaman').style.display = 'none';
-        if(document.getElementById('proyek')) document.getElementById('proyek').style.display = 'none';
+    const semuaHalaman = ['tentang', 'keahlian', 'foto', 'pengalaman', 'proyek', 'sertifikat'];
+
+    function bukaHalaman(halamanTujuan) {
+        semuaHalaman.forEach(function(id) {
+            let elemen = document.getElementById(id);
+            if (elemen) {
+                if (id === halamanTujuan) {
+                    elemen.style.display = 'block'; // Memunculkan menu yang diklik
+                } else {
+                    elemen.style.display = 'none';  // Menyembunyikan sisa menu lainnya
+                }
+            }
+        });
     }
 
-    // 2. Fungsi untuk menampilkan galeri Foto
-    function bukaFoto() {
-        if(document.getElementById('foto')) document.getElementById('foto').style.display = 'block';
-        
-        // Sembunyikan yang lain
-        document.getElementById('tentang').style.display = 'none';
-        if(document.getElementById('sertifikat')) document.getElementById('sertifikat').style.display = 'none';
-        
-        if(document.getElementById('keahlian')) document.getElementById('keahlian').style.display = 'none';
-        if(document.getElementById('pengalaman')) document.getElementById('pengalaman').style.display = 'none';
-        if(document.getElementById('proyek')) document.getElementById('proyek').style.display = 'none';
-    }
-
-    // 3. Fungsi BARU untuk menampilkan Sertifikat
-    function bukaSertifikat() {
-        if(document.getElementById('sertifikat')) document.getElementById('sertifikat').style.display = 'block';
-        
-        // Sembunyikan yang lain
-        document.getElementById('tentang').style.display = 'none';
-        if(document.getElementById('foto')) document.getElementById('foto').style.display = 'none';
-        
-        if(document.getElementById('keahlian')) document.getElementById('keahlian').style.display = 'none';
-        if(document.getElementById('pengalaman')) document.getElementById('pengalaman').style.display = 'none';
-        if(document.getElementById('proyek')) document.getElementById('proyek').style.display = 'none';
-    }
-
-    // Perintah otomatis saat website pertama kali dibuka
     window.onload = function() {
-        bukaTentang();
+        bukaHalaman('tentang');
     };
 </script>
     
