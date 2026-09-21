@@ -215,14 +215,21 @@
 
     function zoomFoto(index) {
         indeksSekarang = index;
-        document.getElementById("imgZoom").src = daftarFoto[indeksSekarang];
-        document.getElementById("modalZoom").style.display = "flex";
-        resetZoom(); // Reset ukuran foto ke normal saat dibuka
+        const img = document.getElementById("imgZoom");
+        const modal = document.getElementById("modalZoom");
+        if (img && modal) {
+            img.src = daftarFoto[indeksSekarang];
+            modal.style.display = "flex";
+            resetZoom(); // Reset ukuran foto ke normal saat dibuka
+        }
     }
 
     function tutupZoom() {
-        document.getElementById("modalZoom").style.display = "none";
-        resetZoom();
+        const modal = document.getElementById("modalZoom");
+        if (modal) {
+            modal.style.display = "none";
+            resetZoom();
+        }
     }
 
     function geserFoto(langkah) {
@@ -233,8 +240,11 @@
         if (indeksSekarang < 0) {
             indeksSekarang = daftarFoto.length - 1;
         }
-        document.getElementById("imgZoom").src = daftarFoto[indeksSekarang];
-        resetZoom(); // Reset ukuran foto ke normal saat ganti foto
+        const img = document.getElementById("imgZoom");
+        if (img) {
+            img.src = daftarFoto[indeksSekarang];
+            resetZoom(); // Reset ukuran foto ke normal saat ganti foto
+        }
     }
 
     // Zoom dengan Scroll Mouse (Putar Ke Atas = Zoom In, Ke Bawah = Zoom Out)
@@ -272,42 +282,6 @@
             }
         }
     });
-
-let indeksSekarang = 0;
-
-function zoomFoto(index) {
-    indeksSekarang = index;
-    document.getElementById("imgZoom").src = daftarFoto[indeksSekarang];
-    document.getElementById("modalZoom").style.display = "flex";
-}
-
-function tutupZoom() {
-    document.getElementById("modalZoom").style.display = "none";
-}
-
-function geserFoto(langkah) {
-    indeksSekarang += langkah;
-    if (indeksSekarang >= daftarFoto.length) {
-        indeksSekarang = 0;
-    }
-    if (indeksSekarang < 0) {
-        indeksSekarang = daftarFoto.length - 1;
-    }
-    document.getElementById("imgZoom").src = daftarFoto[indeksSekarang];
-}
-
-document.addEventListener('keydown', function(e) {
-    const modal = document.getElementById("modalZoom");
-    if (modal && modal.style.display === "flex") {
-        if (e.key === "ArrowLeft") {
-            geserFoto(-1);
-        } else if (e.key === "ArrowRight") {
-            geserFoto(1);
-        } else if (e.key === "Escape") {
-            tutupZoom();
-        }
-    }
-});
 </script>
 
 <!-- Modal Zoom Foto dengan Navigasi -->
