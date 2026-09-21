@@ -188,15 +188,90 @@
     window.onload = function() {
         bukaHalaman('tentang');
     };
-// === PASTE KODE BARU LANGKAH 3 DI BAWAH SINI (MENGGANTIKAN BARIS 191 - 198) ===
-const daftarFoto = [
-    'galeri/kegiatan1.jpeg',
-    'galeri/kegiatan2.jpeg',
-    'galeri/kegiatan3.jpeg',
-    'galeri/kegiatan4.jpeg',
-    'galeri/kegiatan5.jpeg',
-    'galeri/kegiatan6.jpeg'
-];
+
+    const daftarFoto = [
+        'galeri/kegiatan1.jpeg',
+        'galeri/kegiatan2.jpeg',
+        'galeri/kegiatan3.jpeg',
+        'galeri/kegiatan4.jpeg',
+        'galeri/kegiatan5.jpeg',
+        'galeri/kegiatan6.jpeg'
+    ];
+
+    let indeksSekarang = 0;
+    let skalaZoom = 1; // Menyimpan skala pembesaran foto
+
+    function terapkanZoom() {
+        const img = document.getElementById("imgZoom");
+        if (img) {
+            img.style.transform = `scale(${skalaZoom})`;
+        }
+    }
+
+    function resetZoom() {
+        skalaZoom = 1;
+        terapkanZoom();
+    }
+
+    function zoomFoto(index) {
+        indeksSekarang = index;
+        document.getElementById("imgZoom").src = daftarFoto[indeksSekarang];
+        document.getElementById("modalZoom").style.display = "flex";
+        resetZoom(); // Reset ukuran foto ke normal saat dibuka
+    }
+
+    function tutupZoom() {
+        document.getElementById("modalZoom").style.display = "none";
+        resetZoom();
+    }
+
+    function geserFoto(langkah) {
+        indeksSekarang += langkah;
+        if (indeksSekarang >= daftarFoto.length) {
+            indeksSekarang = 0;
+        }
+        if (indeksSekarang < 0) {
+            indeksSekarang = daftarFoto.length - 1;
+        }
+        document.getElementById("imgZoom").src = daftarFoto[indeksSekarang];
+        resetZoom(); // Reset ukuran foto ke normal saat ganti foto
+    }
+
+    // Zoom dengan Scroll Mouse (Putar Ke Atas = Zoom In, Ke Bawah = Zoom Out)
+    document.addEventListener('wheel', function(e) {
+        const modal = document.getElementById("modalZoom");
+        if (modal && modal.style.display === "flex") {
+            e.preventDefault(); // Mencegah halaman utama ikut ter-scroll
+            if (e.deltaY < 0) {
+                if (skalaZoom < 3.5) skalaZoom += 0.15; // Maksimal zoom 3.5x
+            } else {
+                if (skalaZoom > 0.5) skalaZoom -= 0.15; // Minimal zoom 0.5x
+            }
+            terapkanZoom();
+        }
+    }, { passive: false });
+
+    // Navigasi Keyboard (Kiri/Kanan = Ganti Foto, Atas/Bawah = Zoom, ESC = Tutup)
+    document.addEventListener('keydown', function(e) {
+        const modal = document.getElementById("modalZoom");
+        if (modal && modal.style.display === "flex") {
+            if (e.key === "ArrowLeft") {
+                geserFoto(-1);
+            } else if (e.key === "ArrowRight") {
+                geserFoto(1);
+            } else if (e.key === "ArrowUp") {
+                e.preventDefault();
+                if (skalaZoom < 3.5) skalaZoom += 0.2; // Zoom In
+                terapkanZoom();
+            } else if (e.key === "ArrowDown") {
+                e.preventDefault();
+                if (skalaZoom > 0.5) skalaZoom -= 0.2; // Zoom Out
+                terapkanZoom();
+            } else if (e.key === "Escape") {
+                tutupZoom();
+            }
+        }
+    });
 
 let indeksSekarang = 0;
 
