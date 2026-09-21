@@ -347,4 +347,5 @@ footer {
 /* Memberi jarak aman di atas agar judul tidak tertutup navbar */
 section {
     padding-top: 80px;
+    scroll-margin-top: 100px;
 }
