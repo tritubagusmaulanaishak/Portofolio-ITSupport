@@ -349,3 +349,55 @@ section {
     padding-top: 80px;
     scroll-margin-top: 100px;
 }
+
+/* === TAMPILAN RESPONSIVE KHUSUS UNTUK HP === */
+@media screen and (max-width: 768px) {
+    /* Mencegah layar bergeser/meluber ke kiri dan kanan */
+    body, html {
+        overflow-x: hidden;
+        max-width: 100vw;
+    }
+
+    /* Mengubah susunan header agar menu turun ke bawah judul */
+    header {
+        flex-direction: column;
+        align-items: center;
+        padding: 15px 10px;
+    }
+
+    /* Menyusun menu navigasi agar rapi dan membungkus ke baris baru jika penuh */
+    nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 15px;
+        width: 100%;
+    }
+
+    /* Mengecilkan teks dan tombol menu navigasi */
+    nav a {
+        font-size: 13px;
+        padding: 6px 10px;
+    }
+
+    /* Menyesuaikan jarak section agar judul tidak tertutup header yang sekarang lebih tebal di HP */
+    section {
+        padding-top: 140px; 
+        scroll-margin-top: 150px;
+    }
+
+    /* Mengecilkan ukuran foto profil dan teks judul di halaman depan */
+    .hero-section img {
+        width: 150px;
+        height: 150px;
+    }
+    
+    .hero-section h1 {
+        font-size: 24px;
+    }
+    
+    .hero-section h2 {
+        font-size: 18px;
+    }
+}
