@@ -184,10 +184,11 @@
             }
         });
         // === PERBAIKAN: Otomatis scroll layar ke paling atas saat menu diklik ===
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth' // Memberikan efek scroll yang halus
-        });
+        setTimeout(function() {
+        window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+        }, 10);
     }
 
     window.onload = function() {
