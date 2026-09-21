@@ -355,59 +355,63 @@ section {
     box-sizing: border-box;
 }
 
+/* === PERBAIKAN TOTAL NAVIGASI & LAYOUT MOBILE === */
 @media screen and (max-width: 768px) {
-    /* Kunci lebar layar HP agar tidak meluber */
+    /* 1. Kunci Halaman Utama Agar Tidak Meluber */
     html, body {
         width: 100% !important;
         max-width: 100vw !important;
         overflow-x: hidden !important;
-        margin: 0;
-        padding: 0;
+        margin: 0 !important;
+        padding: 0 !important;
     }
 
-    /* Paksa semua bagian halaman (Tentang, Keahlian, dll) mengikuti lebar HP */
-    section, div, main, .hero-section, .about-section, .skills-section, .skills-container, .skills-grid {
-        max-width: 100% !important;
+    /* 2. Buat Header & Menu Navigasi Bisa Di-scroll Kiri-Kanan */
+    header {
         width: 100% !important;
+        padding: 10px 0 !important;
         box-sizing: border-box !important;
     }
 
-    /* Paksa tampilan grid/kolom di Keahlian & Tentang agar tersusun ke bawah */
-    .skills-grid, .skills-container, .about-content, .grid-container, .experience-container {
+    nav {
+        display: flex !important;
+        flex-wrap: nowrap !important;       /* Menu tetap berjejer 1 baris */
+        overflow-x: auto !important;        /* BISA DIGESER KIRI-KANAN DENGAN JARI */
+        -webkit-overflow-scrolling: touch; /* Efek geser mulus di HP */
+        width: 100% !important;
+        justify-content: flex-start !important; /* Mulai dari menu paling kiri (Tentang) */
+        padding: 10px 15px !important;
+        gap: 10px !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Sembunyikan garis scrollbar agar tampilan menu tetap bersih */
+    nav::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Ukuran Tombol Menu Navigasi */
+    nav a {
+        white-space: nowrap !important; /* Mencegah teks menu terpotong ke bawah */
+        font-size: 13px !important;
+        padding: 6px 12px !important;
+        flex-shrink: 0 !important;     /* Mencegah tombol menu ciut/gepeng */
+    }
+
+    /* 3. Penyesuaian Isi Halaman */
+    section {
+        width: 100% !important;
+        max-width: 100vw !important;
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+        padding-top: 130px !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Penyesuaian Kartu/Grid di Keahlian & Pengalaman */
+    .skills-grid, .skills-container, .about-content, .grid-container {
         display: flex !important;
         flex-direction: column !important;
-        flex-wrap: wrap !important;
-        gap: 15px !important;
-    }
-
-    /* Mencegah gambar, tabel, atau kartu elemen melebarkan layar */
-    img, iframe, .card, .skill-card, .skills-card {
-        max-width: 100% !important;
-        height: auto !important;
-    }
-
-    /* Penyesuaian Header & Navigasi */
-    header {
-        flex-direction: column;
-        align-items: center;
-        padding: 10px;
-    }
-
-    nav {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 6px;
-        width: 100%;
-    }
-
-    nav a {
-        font-size: 12px;
-        padding: 5px 8px;
-    }
-
-    section {
-        padding-top: 140px !important;
-        scroll-margin-top: 150px;
+        width: 100% !important;
     }
 }
