@@ -73,12 +73,12 @@
 
         <div class="gallery-grid">
             <!-- Ubah src sesuai dengan nama file foto kegiatanmu yang sudah diunggah ke GitHub -->
-            <img src="galeri/kegiatan1.jpeg" alt="Kegiatan 1" onclick="zoomFoto(this.src)" style="cursor: pointer;">
-            <img src="galeri/kegiatan2.jpeg" alt="Kegiatan 2" onclick="zoomFoto(this.src)" style="cursor: pointer;">
-            <img src="galeri/kegiatan3.jpeg" alt="Kegiatan 3" onclick="zoomFoto(this.src)" style="cursor: pointer;">
-            <img src="galeri/kegiatan4.jpeg" alt="Kegiatan 4" onclick="zoomFoto(this.src)" style="cursor: pointer;">
-            <img src="galeri/kegiatan5.jpeg" alt="Kegiatan 5" onclick="zoomFoto(this.src)" style="cursor: pointer;">
-            <img src="galeri/kegiatan6.jpeg" alt="Kegiatan 6" onclick="zoomFoto(this.src)" style="cursor: pointer;">
+        <img src="galeri/kegiatan1.jpeg" alt="Kegiatan 1" onclick="zoomFoto(0)" style="cursor: pointer;">
+        <img src="galeri/kegiatan2.jpeg" alt="Kegiatan 2" onclick="zoomFoto(1)" style="cursor: pointer;">
+        <img src="galeri/kegiatan3.jpeg" alt="Kegiatan 3" onclick="zoomFoto(2)" style="cursor: pointer;">
+        <img src="galeri/kegiatan4.jpeg" alt="Kegiatan 4" onclick="zoomFoto(3)" style="cursor: pointer;">
+        <img src="galeri/kegiatan5.jpeg" alt="Kegiatan 5" onclick="zoomFoto(4)" style="cursor: pointer;">
+        <img src="galeri/kegiatan6.jpeg" alt="Kegiatan 6" onclick="zoomFoto(5)" style="cursor: pointer;">
         </div>
     </div>
 </section>
@@ -188,20 +188,59 @@
     window.onload = function() {
         bukaHalaman('tentang');
     };
-    function zoomFoto(src) {
-        document.getElementById("imgZoom").src = src;
-        document.getElementById("modalZoom").style.display = "block";
-    }
+// === PASTE KODE BARU LANGKAH 3 DI BAWAH SINI (MENGGANTIKAN BARIS 191 - 198) ===
+const daftarFoto = [
+    'galeri/kegiatan1.jpeg',
+    'galeri/kegiatan2.jpeg',
+    'galeri/kegiatan3.jpeg',
+    'galeri/kegiatan4.jpeg',
+    'galeri/kegiatan5.jpeg',
+    'galeri/kegiatan6.jpeg'
+];
 
-    function tutupZoom() {
-        document.getElementById("modalZoom").style.display = "none";
+let indeksSekarang = 0;
+
+function zoomFoto(index) {
+    indeksSekarang = index;
+    document.getElementById("imgZoom").src = daftarFoto[indeksSekarang];
+    document.getElementById("modalZoom").style.display = "flex";
+}
+
+function tutupZoom() {
+    document.getElementById("modalZoom").style.display = "none";
+}
+
+function geserFoto(langkah) {
+    indeksSekarang += langkah;
+    if (indeksSekarang >= daftarFoto.length) {
+        indeksSekarang = 0;
     }
+    if (indeksSekarang < 0) {
+        indeksSekarang = daftarFoto.length - 1;
+    }
+    document.getElementById("imgZoom").src = daftarFoto[indeksSekarang];
+}
+
+document.addEventListener('keydown', function(e) {
+    const modal = document.getElementById("modalZoom");
+    if (modal && modal.style.display === "flex") {
+        if (e.key === "ArrowLeft") {
+            geserFoto(-1);
+        } else if (e.key === "ArrowRight") {
+            geserFoto(1);
+        } else if (e.key === "Escape") {
+            tutupZoom();
+        }
+    }
+});
 </script>
 
-    <!-- Modal Zoom Foto -->
-<div id="modalZoom" class="modal-zoom" onclick="tutupZoom()">
-    <span class="tombol-tutup">&times;</span>
+<!-- Modal Zoom Foto dengan Navigasi -->
+<div id="modalZoom" class="modal-zoom">
+    <span class="tombol-tutup" onclick="tutupZoom()">&times;</span>
+    <a class="nav-panah prev" onclick="geserFoto(-1)">&#10094;</a>
     <img id="imgZoom" class="modal-content">
+    <a class="nav-panah next" onclick="geserFoto(1)">&#10095;</a>
 </div>
     
 </body>
