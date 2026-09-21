@@ -343,3 +343,8 @@ footer {
     font-weight: bold;
     cursor: pointer;
 }
+
+/* Memberi jarak aman di atas agar judul tidak tertutup navbar */
+section {
+    padding-top: 80px;
+}
