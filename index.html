@@ -201,8 +201,12 @@
             el.classList.add('show');
         });
     }, 50);
+        
+    // Pemanggilan animasi ketik (Di DALAM fungsi bukaHalaman)
+    if (halamanId === 'pengalaman') {
+        setTimeout(jalankanAnimasiKetik, 100);
+        }
     }
-   
     window.onload = function() {
         bukaHalaman('tentang');
     };
