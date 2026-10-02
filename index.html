@@ -192,6 +192,15 @@
         document.documentElement.scrollTop = 0;
         document.body.scrollTop = 0;
         }, 10);
+     const elemenAnimasi = document.querySelectorAll('.fade-in-element');
+    elemenAnimasi.forEach(function(el) {
+        el.classList.remove('show');
+    });
+    setTimeout(function() {
+        elemenAnimasi.forEach(function(el) {
+            el.classList.add('show');
+        });
+    }, 50);
     }
 
     window.onload = function() {
@@ -207,7 +216,6 @@
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add("show");
-                    observer.unobserve(entry.target); // Jalankan animasi 1 kali saja
                 }
             });
         }, observerOptions);
