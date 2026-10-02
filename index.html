@@ -201,11 +201,47 @@
             el.classList.add('show');
         });
     }, 50);
+        // Jalankan animasi ketik jika menu Pengalaman dibuka
+    if (halamanId === 'pengalaman') {
+        jalankanAnimasiKetik();
+        }
     }
-
     window.onload = function() {
         bukaHalaman('tentang');
     };
+    // === FUNGSI ANIMASI MENGETIK PATEN & CEPAT ===
+    function jalankanAnimasiKetik() {
+        const listItems = document.querySelectorAll('.experience-item ul li');
+        
+    listItems.forEach(li => {
+        if (!li.dataset.fullText) {
+            li.dataset.fullText = li.innerText;
+        }
+        li.innerText = '';
+    });
+
+    let itemIndex = 0;
+
+    function ketikBaris() {
+        if (itemIndex >= listItems.length) return;
+
+        const currentLi = listItems[itemIndex];
+        const textToType = currentLi.dataset.fullText;
+        let charIndex = 0;
+
+        const typingInterval = setInterval(() => {
+            if (charIndex < textToType.length) {
+                currentLi.innerText += textToType.charAt(charIndex);
+                charIndex++;
+            } else {
+                clearInterval(typingInterval);
+                itemIndex++;
+                ketikBaris();
+            }
+        }, 12);
+    }
+    ketikBaris();
+    }
     // === ANIMASI SCROLL OTOMATIS (INTERSECTION OBSERVER) ===
     document.addEventListener("DOMContentLoaded", function () {
         const observerOptions = {
