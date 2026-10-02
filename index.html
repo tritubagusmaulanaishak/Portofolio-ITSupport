@@ -202,44 +202,55 @@
         });
     }, 50);
     }
-    
+    // Di dalam fungsi bukaHalaman(halamanId) Anda:
+    if (halamanId === 'pengalaman') {
+    setTimeout(jalankanAnimasiKetik, 100);
+    }
+}
     window.onload = function() {
         bukaHalaman('tentang');
     };
 
-// === FUNGSI ANIMASI MENGETIK PATEN & CEPAT ===
+// === FUNGSI ANIMASI MENGETIK SUPER CEPAT ===
 function jalankanAnimasiKetik() {
-    const listItems = document.querySelectorAll('.experience-item ul li');
-    
+    // Menargetkan poin-poin list (li) di halaman Pengalaman
+    const listItems = document.querySelectorAll('#pengalaman ul li, .experience-item ul li');
+    if (!listItems || listItems.length === 0) return;
+
+    // 1. Simpan teks asli setiap poin agar tidak hilang saat diklik ulang
     listItems.forEach(li => {
-        if (!li.dataset.fullText) {
-            li.dataset.fullText = li.innerText;
+        if (!li.dataset.teksAsli) {
+            li.dataset.teksAsli = li.innerText.trim();
         }
-       li.innerText = '';
+        if (li.typingTimer) {
+            clearInterval(li.typingTimer);
+        }
+        li.innerText = ''; // Kosongkan tampilan untuk mulai ketik
     });
 
-   let itemIndex = 0;
+    let itemIndex = 0;
 
-   function ketikBaris() {
-      if (itemIndex >= listItems.length) return;
+    // 2. Ketik teks poin demi poin dengan durasi cepat (8 ms)
+    function ketikPoin() {
+        if (itemIndex >= listItems.length) return;
 
-       const currentLi = listItems[itemIndex];
-       const textToType = currentLi.dataset.fullText;
-       let charIndex = 0;
+        const currentLi = listItems[itemIndex];
+        const teksLengkap = currentLi.dataset.teksAsli || '';
+        let charIndex = 0;
 
-       const typingInterval = setInterval(() => {
-           if (charIndex < textToType.length) {
-              currentLi.innerText += textToType.charAt(charIndex);
-              charIndex++;
-          } else {
-              clearInterval(typingInterval);
-              itemIndex++;
-               ketikBaris();
-          }
-       }, 12);
+        currentLi.typingTimer = setInterval(() => {
+            if (charIndex < teksLengkap.length) {
+                currentLi.innerText += teksLengkap.charAt(charIndex);
+                charIndex++;
+            } else {
+                clearInterval(currentLi.typingTimer);
+                itemIndex++;
+                ketikPoin(); // Lanjut ke poin berikutnya
+            }
+        }, 8); // === KECEPATAN: 8ms (Sangat Cepat) ===
     }
 
-    ketikBaris();
+    ketikPoin();
 }
     
     const daftarFoto = [
