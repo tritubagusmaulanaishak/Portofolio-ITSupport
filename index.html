@@ -211,28 +211,25 @@
         bukaHalaman('tentang');
     };
 
-// === FUNGSI ANIMASI MENGETIK (FIX TOTAL SPASI & CACHE) ===
+// === FUNGSI ANIMASI MENGETIK (SOLUSI PATEN SPASI & TEXTCONTENT) ===
 function jalankanAnimasiKetik() {
     const listItems = document.querySelectorAll('#pengalaman li, .experience-item li');
     if (!listItems || listItems.length === 0) return;
 
     listItems.forEach(li => {
-        // Gunakan 'teksRapi' untuk membuang cache teks lama yang tidak berspasi
-        if (!li.dataset.teksRapi || li.dataset.teksRapi.indexOf(' ') === -1) {
-            let teksAwal = li.innerText || li.textContent;
-            if (teksAwal && teksAwal.trim() !== '') {
-                // Bersihkan enter, tab, dan ganti spasi ganda menjadi 1 spasi rapi
-                li.dataset.teksRapi = teksAwal.replace(/[\r\n\t]+/g, ' ').replace(/\s+/g, ' ').trim();
-            }
+        // 1. Ambil teks asli menggunakan textContent dan rapikan spasi/enter
+        if (!li.dataset.teksPaten) {
+            const teksAwal = li.textContent || li.innerText || '';
+            li.dataset.teksPaten = teksAwal.replace(/\s+/g, ' ').trim();
         }
 
-        // Hentikan timer jika animasi sebelumnya masih berjalan
+        // Hentikan timer animasi lama jika masih berjalan
         if (li.typingTimer) {
             clearInterval(li.typingTimer);
         }
 
-        // Kosongkan elemen untuk mulai mengetik ulang
-        li.innerText = ''; 
+        // Kosongkan tampilan
+        li.textContent = '';
     });
 
     let itemIndex = 0;
@@ -241,7 +238,7 @@ function jalankanAnimasiKetik() {
         if (itemIndex >= listItems.length) return;
 
         const currentLi = listItems[itemIndex];
-        const teksLengkap = currentLi.dataset.teksRapi || '';
+        const teksLengkap = currentLi.dataset.teksPaten || '';
         let charIndex = 0;
 
         if (!teksLengkap) {
@@ -252,12 +249,13 @@ function jalankanAnimasiKetik() {
 
         currentLi.typingTimer = setInterval(() => {
             if (charIndex < teksLengkap.length) {
-                currentLi.innerText += teksLengkap.charAt(charIndex);
                 charIndex++;
+                // Menggunakan textContent + slice() agar spasi tidak dipotong browser
+                currentLi.textContent = teksLengkap.slice(0, charIndex);
             } else {
                 clearInterval(currentLi.typingTimer);
                 itemIndex++;
-                ketikPoin();
+                ketikPoin(); // Lanjut ke poin berikutnya
             }
         }, 8); // Kecepatan ketik: 8 ms per karakter
     }
