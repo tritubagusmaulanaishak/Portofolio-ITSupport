@@ -186,35 +186,33 @@
                 }
             }
         });
-// Variable global untuk menyimpan timer agar animasi tidak bentrok saat diklik berulang
-let typingTimers = [];
+// === VARIABLE GLOBAL UNTUK MENCEGAH BENTROKAN ANIMASI ===
+let typingIntervals = [];
 
 function bukaHalaman(halamanId) {
-    // ... (kode untuk menampilkan/menyembunyikan section Anda tetap di atas) ...
-
-    // Otomatis scroll layar ke paling atas saat menu diklik
-    setTimeout(function() {
-        window.scrollTo(0, 0);
-        document.documentElement.scrollTop = 0;
-        document.body.scrollTop = 0;
-    }, 10);
-
-    // Reset & jalankan ulang animasi fade-in
-    const elemenAnimasi = document.querySelectorAll('.fade-in-element');
-    elemenAnimasi.forEach(function(el) {
-        el.classList.remove('show');
+    // 1. Tampilkan section yang dipilih dan sembunyikan section lainnya
+    const semuaSection = document.querySelectorAll('section, .page-section, .content-section');
+    semuaSection.forEach(sec => {
+        if (sec.id) {
+            sec.style.display = (sec.id === halamanId) ? 'block' : 'none';
+        }
     });
-    setTimeout(function() {
-        elemenAnimasi.forEach(function(el) {
-            el.classList.add('show');
-        });
+
+    // 2. Scroll layar ke paling atas
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+
+    // 3. Reset & jalankan ulang animasi fade-in
+    const elemenAnimasi = document.querySelectorAll('.fade-in-element');
+    elemenAnimasi.forEach(el => el.classList.remove('show'));
+    setTimeout(() => {
+        elemenAnimasi.forEach(el => el.classList.add('show'));
     }, 50);
 
-    // Jalankan animasi ketik jika menu Pengalaman dibuka (diberi jeda 100ms)
+    // 4. Jalankan animasi ketik jika menu 'pengalaman' dibuka
     if (halamanId === 'pengalaman') {
-        setTimeout(function() {
-            jalankanAnimasiKetik();
-        }, 100);
+        setTimeout(jalankanAnimasiKetik, 100);
     }
 }
 
@@ -222,47 +220,60 @@ window.onload = function() {
     bukaHalaman('tentang');
 };
 
-// === FUNGSI ANIMASI MENGETIK PATEN & PERBAIKAN BUG ===
+// === FUNGSI ANIMASI MENGETIK BEBAS BUG ===
 function jalankanAnimasiKetik() {
-    // Selector fleksibel mencakup semua <li> di dalam menu pengalaman
+    // Cari elemen daftar poin di menu pengalaman
     const listItems = document.querySelectorAll('#pengalaman li, .experience-item li');
-    
-    // 1. Hentikan timer animasi sebelumnya jika sedang berjalan
-    typingTimers.forEach(timer => clearInterval(timer));
-    typingTimers = [];
+    if (!listItems || listItems.length === 0) return;
 
-    // 2. Simpan teks asli pakai textContent (agar teks tidak hilang saat elemen sempat tersembunyi)
+    // Hentikan pengetikan sebelumnya jika tombol diklik berulang kali
+    typingIntervals.forEach(interval => clearInterval(interval));
+    typingIntervals = [];
+
+    // Step A: Simpan teks asli hanya sekali, lalu kosongkan tampilan
     listItems.forEach(li => {
-        if (!li.dataset.fullText || li.dataset.fullText.trim() === '') {
-            li.dataset.fullText = li.textContent.trim();
+        if (!li.dataset.fullText) {
+            const teksAwal = li.textContent.trim();
+            if (teksAwal !== '') {
+                li.dataset.fullText = teksAwal;
+            }
         }
-        li.textContent = ''; // Kosongkan sebelum mulai mengetik
+        if (li.dataset.fullText) {
+            li.textContent = ''; // Kosongkan tampilan untuk mulai ketik
+        }
     });
 
+    // Step B: Jalankan efek mengetik satu per satu
     let itemIndex = 0;
 
-    function ketikBaris() {
+    function ketikSatuPoin() {
         if (itemIndex >= listItems.length) return;
 
         const currentLi = listItems[itemIndex];
-        const textToType = currentLi.dataset.fullText;
+        const textToType = currentLi.dataset.fullText || '';
         let charIndex = 0;
 
-        const typingInterval = setInterval(() => {
+        if (!textToType) {
+            itemIndex++;
+            ketikSatuPoin();
+            return;
+        }
+
+        const timer = setInterval(() => {
             if (charIndex < textToType.length) {
                 currentLi.textContent += textToType.charAt(charIndex);
                 charIndex++;
             } else {
-                clearInterval(typingInterval);
+                clearInterval(timer);
                 itemIndex++;
-                ketikBaris();
+                ketikSatuPoin(); // Lanjut ke poin berikutnya
             }
-        }, 12); // Kecepatan mengetik per karakter (12ms)
+        }, 10); // Kecepatan ketik (10ms per karakter)
 
-        typingTimers.push(typingInterval);
+        typingIntervals.push(timer);
     }
 
-    ketikBaris();
+    ketikSatuPoin();
 }
 
 // === ANIMASI SCROLL OTOMATIS (INTERSECTION OBSERVER) ===
@@ -282,7 +293,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const elemenAnimasi = document.querySelectorAll(".fade-in-element");
     elemenAnimasi.forEach(el => observer.observe(el));
 });
-
+        
     const daftarFoto = [
         'galeri/kegiatan1.jpeg',
         'galeri/kegiatan2.jpeg',
