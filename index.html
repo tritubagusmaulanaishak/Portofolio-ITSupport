@@ -186,13 +186,21 @@
                 }
             }
         });
-        // === PERBAIKAN: Otomatis scroll layar ke paling atas saat menu diklik ===
-        setTimeout(function() {
+// Variable global untuk menyimpan timer agar animasi tidak bentrok saat diklik berulang
+let typingTimers = [];
+
+function bukaHalaman(halamanId) {
+    // ... (kode untuk menampilkan/menyembunyikan section Anda tetap di atas) ...
+
+    // Otomatis scroll layar ke paling atas saat menu diklik
+    setTimeout(function() {
         window.scrollTo(0, 0);
         document.documentElement.scrollTop = 0;
         document.body.scrollTop = 0;
-        }, 10);
-     const elemenAnimasi = document.querySelectorAll('.fade-in-element');
+    }, 10);
+
+    // Reset & jalankan ulang animasi fade-in
+    const elemenAnimasi = document.querySelectorAll('.fade-in-element');
     elemenAnimasi.forEach(function(el) {
         el.classList.remove('show');
     });
@@ -201,23 +209,34 @@
             el.classList.add('show');
         });
     }, 50);
-        // Jalankan animasi ketik jika menu Pengalaman dibuka
+
+    // Jalankan animasi ketik jika menu Pengalaman dibuka (diberi jeda 100ms)
     if (halamanId === 'pengalaman') {
-        jalankanAnimasiKetik();
-        }
+        setTimeout(function() {
+            jalankanAnimasiKetik();
+        }, 100);
     }
-    window.onload = function() {
-        bukaHalaman('tentang');
-    };
-    // === FUNGSI ANIMASI MENGETIK PATEN & CEPAT ===
-    function jalankanAnimasiKetik() {
-        const listItems = document.querySelectorAll('.experience-item ul li');
-        
+}
+
+window.onload = function() {
+    bukaHalaman('tentang');
+};
+
+// === FUNGSI ANIMASI MENGETIK PATEN & PERBAIKAN BUG ===
+function jalankanAnimasiKetik() {
+    // Selector fleksibel mencakup semua <li> di dalam menu pengalaman
+    const listItems = document.querySelectorAll('#pengalaman li, .experience-item li');
+    
+    // 1. Hentikan timer animasi sebelumnya jika sedang berjalan
+    typingTimers.forEach(timer => clearInterval(timer));
+    typingTimers = [];
+
+    // 2. Simpan teks asli pakai textContent (agar teks tidak hilang saat elemen sempat tersembunyi)
     listItems.forEach(li => {
-        if (!li.dataset.fullText) {
-            li.dataset.fullText = li.innerText;
+        if (!li.dataset.fullText || li.dataset.fullText.trim() === '') {
+            li.dataset.fullText = li.textContent.trim();
         }
-        li.innerText = '';
+        li.textContent = ''; // Kosongkan sebelum mulai mengetik
     });
 
     let itemIndex = 0;
@@ -231,35 +250,38 @@
 
         const typingInterval = setInterval(() => {
             if (charIndex < textToType.length) {
-                currentLi.innerText += textToType.charAt(charIndex);
+                currentLi.textContent += textToType.charAt(charIndex);
                 charIndex++;
             } else {
                 clearInterval(typingInterval);
                 itemIndex++;
                 ketikBaris();
             }
-        }, 12);
+        }, 12); // Kecepatan mengetik per karakter (12ms)
+
+        typingTimers.push(typingInterval);
     }
+
     ketikBaris();
-    }
-    // === ANIMASI SCROLL OTOMATIS (INTERSECTION OBSERVER) ===
-    document.addEventListener("DOMContentLoaded", function () {
-        const observerOptions = {
-            threshold: 0.15 // Animasi berjalan saat 15% elemen terlihat di layar
-        };
+}
 
-        const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add("show");
-                }
-            });
-        }, observerOptions);
+// === ANIMASI SCROLL OTOMATIS (INTERSECTION OBSERVER) ===
+document.addEventListener("DOMContentLoaded", function () {
+    const observerOptions = {
+        threshold: 0.15
+    };
 
-        // Cari semua elemen yang memiliki kelas 'fade-in-element'
-        const elemenAnimasi = document.querySelectorAll(".fade-in-element");
-        elemenAnimasi.forEach(el => observer.observe(el));
-    });
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("show");
+            }
+        });
+    }, observerOptions);
+
+    const elemenAnimasi = document.querySelectorAll(".fade-in-element");
+    elemenAnimasi.forEach(el => observer.observe(el));
+});
 
     const daftarFoto = [
         'galeri/kegiatan1.jpeg',
