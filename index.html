@@ -190,11 +190,19 @@
 let typingIntervals = [];
 
 function bukaHalaman(halamanId) {
-    // 1. Tampilkan section yang dipilih dan sembunyikan section lainnya
+    // 1. Tampilkan section yang dipilih & sembunyikan section lainnya dengan aman
     const semuaSection = document.querySelectorAll('section, .page-section, .content-section');
+    
     semuaSection.forEach(sec => {
-        if (sec.id) {
-            sec.style.display = (sec.id === halamanId) ? 'block' : 'none';
+        if (sec.id === halamanId) {
+            sec.classList.add('active');
+            sec.classList.remove('hidden');
+            // Menghapus inline display agar layout CSS asli (flex/grid/block) berjalan normal
+            sec.style.display = ''; 
+        } else if (sec.id) {
+            sec.classList.remove('active');
+            sec.classList.add('hidden');
+            sec.style.display = 'none'; // Sembunyikan section lain sepenuhnya
         }
     });
 
@@ -220,7 +228,7 @@ window.onload = function() {
     bukaHalaman('tentang');
 };
 
-// === FUNGSI ANIMASI MENGETIK BEBAS BUG ===
+// === FUNGSI ANIMASI MENGETIK AMAN & TERTATA ===
 function jalankanAnimasiKetik() {
     // Cari elemen daftar poin di menu pengalaman
     const listItems = document.querySelectorAll('#pengalaman li, .experience-item li');
@@ -230,7 +238,7 @@ function jalankanAnimasiKetik() {
     typingIntervals.forEach(interval => clearInterval(interval));
     typingIntervals = [];
 
-    // Step A: Simpan teks asli hanya sekali, lalu kosongkan tampilan
+    // Step A: Simpan teks asli hanya sekali
     listItems.forEach(li => {
         if (!li.dataset.fullText) {
             const teksAwal = li.textContent.trim();
