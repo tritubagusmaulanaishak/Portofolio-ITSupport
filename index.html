@@ -186,41 +186,15 @@
                 }
             }
         });
-// === VARIABLE GLOBAL UNTUK MENCEGAH BENTROKAN ANIMASI ===
-let typingIntervals = [];
-
-function bukaHalaman(halamanId) {
-    // 1. Tampilkan section yang dipilih & sembunyikan section lainnya dengan aman
-    const semuaSection = document.querySelectorAll('section, .page-section, .content-section');
-    
-    semuaSection.forEach(sec => {
-        if (sec.id === halamanId) {
-            sec.classList.add('active');
-            sec.classList.remove('hidden');
-            // Menghapus inline display agar layout CSS asli (flex/grid/block) berjalan normal
-            sec.style.display = ''; 
-        } else if (sec.id) {
-            sec.classList.remove('active');
-            sec.classList.add('hidden');
-            sec.style.display = 'none'; // Sembunyikan section lain sepenuhnya
-        }
-    });
-
-    // 2. Scroll layar ke paling atas
-    window.scrollTo(0, 0);
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;
-
-    // 3. Reset & jalankan ulang animasi fade-in
-    const elemenAnimasi = document.querySelectorAll('.fade-in-element');
-    elemenAnimasi.forEach(el => el.classList.remove('show'));
-    setTimeout(() => {
-        elemenAnimasi.forEach(el => el.classList.add('show'));
+setTimeout(function() {
+elemenAnimasi.forEach(function(el) {
+            el.classList.add('show');
+       });
     }, 50);
 
-    // 4. Jalankan animasi ketik jika menu 'pengalaman' dibuka
+   // Jalankan animasi ketik jika menu Pengalaman dibuka
     if (halamanId === 'pengalaman') {
-        setTimeout(jalankanAnimasiKetik, 100);
+        jalankanAnimasiKetik();
     }
 }
 
@@ -228,80 +202,41 @@ window.onload = function() {
     bukaHalaman('tentang');
 };
 
-// === FUNGSI ANIMASI MENGETIK AMAN & TERTATA ===
+// === FUNGSI ANIMASI MENGETIK PATEN & CEPAT ===
 function jalankanAnimasiKetik() {
-    // Cari elemen daftar poin di menu pengalaman
-    const listItems = document.querySelectorAll('#pengalaman li, .experience-item li');
-    if (!listItems || listItems.length === 0) return;
-
-    // Hentikan pengetikan sebelumnya jika tombol diklik berulang kali
-    typingIntervals.forEach(interval => clearInterval(interval));
-    typingIntervals = [];
-
-    // Step A: Simpan teks asli hanya sekali
+    const listItems = document.querySelectorAll('.experience-item ul li');
+    
     listItems.forEach(li => {
         if (!li.dataset.fullText) {
-            const teksAwal = li.textContent.trim();
-            if (teksAwal !== '') {
-                li.dataset.fullText = teksAwal;
-            }
+            li.dataset.fullText = li.innerText;
         }
-        if (li.dataset.fullText) {
-            li.textContent = ''; // Kosongkan tampilan untuk mulai ketik
-        }
+       li.innerText = '';
     });
 
-    // Step B: Jalankan efek mengetik satu per satu
-    let itemIndex = 0;
+   let itemIndex = 0;
 
-    function ketikSatuPoin() {
-        if (itemIndex >= listItems.length) return;
+   function ketikBaris() {
+      if (itemIndex >= listItems.length) return;
 
-        const currentLi = listItems[itemIndex];
-        const textToType = currentLi.dataset.fullText || '';
-        let charIndex = 0;
+       const currentLi = listItems[itemIndex];
+       const textToType = currentLi.dataset.fullText;
+       let charIndex = 0;
 
-        if (!textToType) {
-            itemIndex++;
-            ketikSatuPoin();
-            return;
-        }
-
-        const timer = setInterval(() => {
-            if (charIndex < textToType.length) {
-                currentLi.textContent += textToType.charAt(charIndex);
-                charIndex++;
-            } else {
-                clearInterval(timer);
-                itemIndex++;
-                ketikSatuPoin(); // Lanjut ke poin berikutnya
-            }
-        }, 10); // Kecepatan ketik (10ms per karakter)
-
-        typingIntervals.push(timer);
+       const typingInterval = setInterval(() => {
+           if (charIndex < textToType.length) {
+              currentLi.innerText += textToType.charAt(charIndex);
+              charIndex++;
+          } else {
+              clearInterval(typingInterval);
+              itemIndex++;
+               ketikBaris();
+          }
+       }, 12);
     }
 
-    ketikSatuPoin();
+    ketikBaris();
 }
-
-// === ANIMASI SCROLL OTOMATIS (INTERSECTION OBSERVER) ===
-document.addEventListener("DOMContentLoaded", function () {
-    const observerOptions = {
-        threshold: 0.15
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add("show");
-            }
-        });
-    }, observerOptions);
-
-    const elemenAnimasi = document.querySelectorAll(".fade-in-element");
-    elemenAnimasi.forEach(el => observer.observe(el));
-});
-        
+    
     const daftarFoto = [
         'galeri/kegiatan1.jpeg',
         'galeri/kegiatan2.jpeg',
