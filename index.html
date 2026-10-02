@@ -49,21 +49,21 @@
     <!-- Keahlian Utama (Skills) -->
     <section id="keahlian" class="skills-section">
         <div class="container">
-            <h2 class="section-title">Keahlian Utama</h2>
+            <h2 class="section-title fade-in-element">Keahlian Utama</h2>
             <div class="skills-grid">
-                <div class="skill-card">
+               <div class="skill-card fade-in-element">
                     <h3>Hardware & Sofware</h3>
                     <p>Assembly & Diagnostics PC/Laptop, Windows Server, Windows 10/11, Linux (Ubuntu/Debian), macOS, Printer & Peripheral Maintenance.</p>
                 </div>
-                <div class="skill-card">
+                <div class="skill-card fade-in-element">
                     <h3>Jaringan & Keamanan</h3>
                     <p>MikroTik, TCP/IP, DHCP, DNS, VPN, Router & Switch Setup, Wi-Fi Configuration, Basic Firewall & Network Troubleshooting.</p>
                 </div>
-                <div class="skill-card">
+                <div class="skill-card fade-in-element">
                     <h3>Desain & Editting</h3>
                     <p>Desain Grafis, Corel Draw, Photoshop, Canva, AutoCad, DLL.</p>
                 </div>
-                <div class="skill-card">
+                <div class="skill-card fade-in-element">
                     <h3>Sistem & Cloud</h3>
                     <p>Active Directory, Google Workspace Administration, Microsoft 365, Ticketing Systems (Jira/Freshdesk), Remote Support (AnyDesk/TeamViewer).</p>
                 </div>
@@ -74,16 +74,16 @@
 <!-- Section Galeri Foto -->
 <section id="foto" class="gallery-section" style="display: none;">
     <div class="container">
-        <h2>Galeri <span class="highlight">Kegiatan</span></h2>
+        <h2 class="fade-in-element">Galeri <span class="highlight">Kegiatan</span></h2>
 
         <div class="gallery-grid">
             <!-- Ubah src sesuai dengan nama file foto kegiatanmu yang sudah diunggah ke GitHub -->
-        <img src="galeri/kegiatan1.jpeg" alt="Kegiatan 1" onclick="zoomFoto(0)" style="cursor: pointer;">
-        <img src="galeri/kegiatan2.jpeg" alt="Kegiatan 2" onclick="zoomFoto(1)" style="cursor: pointer;">
-        <img src="galeri/kegiatan3.jpeg" alt="Kegiatan 3" onclick="zoomFoto(2)" style="cursor: pointer;">
-        <img src="galeri/kegiatan4.jpeg" alt="Kegiatan 4" onclick="zoomFoto(3)" style="cursor: pointer;">
-        <img src="galeri/kegiatan5.jpeg" alt="Kegiatan 5" onclick="zoomFoto(4)" style="cursor: pointer;">
-        <img src="galeri/kegiatan6.jpeg" alt="Kegiatan 6" onclick="zoomFoto(5)" style="cursor: pointer;">
+        <img class="fade-in-element" src="galeri/kegiatan1.jpeg" alt="Kegiatan 1" onclick="zoomFoto(0)" style="cursor: pointer;">
+        <img class="fade-in-element" src="galeri/kegiatan2.jpeg" alt="Kegiatan 2" onclick="zoomFoto(1)" style="cursor: pointer;">
+        <img class="fade-in-element" src="galeri/kegiatan3.jpeg" alt="Kegiatan 3" onclick="zoomFoto(2)" style="cursor: pointer;">
+        <img class="fade-in-element" src="galeri/kegiatan4.jpeg" alt="Kegiatan 4" onclick="zoomFoto(3)" style="cursor: pointer;">
+        <img class="fade-in-element" src="galeri/kegiatan5.jpeg" alt="Kegiatan 5" onclick="zoomFoto(4)" style="cursor: pointer;">
+        <img class="fade-in-element" src="galeri/kegiatan6.jpeg" alt="Kegiatan 6" onclick="zoomFoto(5)" style="cursor: pointer;">
         </div>
     </div>
 </section>
@@ -91,10 +91,10 @@
     <!-- Section Pengalaman Kerja -->
 <section id="pengalaman" class="experience-section" style="display: none;">
     <div class="container">
-        <h2 class="section-title">Pengalaman <span class="highlight">Kerja</span></h2>
+        <h2 class="section-title fade-in-element">Pengalaman <span class="highlight">Kerja</span></h2>
         
         <div class="experience-box">
-            <div class="experience-item">
+            <div class="experience-item fade-in-element">
                 <h3>IT Support Specialist</h3>
                 <p class="company"><strong>Klik@Komputer</strong> | 2012 – Sekarang</p>
                 <ul>
@@ -199,6 +199,25 @@
     window.onload = function() {
         bukaHalaman('tentang');
     };
+    // === ANIMASI SCROLL OTOMATIS (INTERSECTION OBSERVER) ===
+    document.addEventListener("DOMContentLoaded", function () {
+        const observerOptions = {
+            threshold: 0.15 // Animasi berjalan saat 15% elemen terlihat di layar
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("show");
+                    observer.unobserve(entry.target); // Jalankan animasi 1 kali saja
+                }
+            });
+        }, observerOptions);
+
+        // Cari semua elemen yang memiliki kelas 'fade-in-element'
+        const elemenAnimasi = document.querySelectorAll(".fade-in-element");
+        elemenAnimasi.forEach(el => observer.observe(el));
+    });
 
     const daftarFoto = [
         'galeri/kegiatan1.jpeg',
