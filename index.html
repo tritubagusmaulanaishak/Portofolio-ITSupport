@@ -186,21 +186,26 @@
                 }
             }
         });
-setTimeout(function() {
-elemenAnimasi.forEach(function(el) {
+       // === PERBAIKAN: Otomatis scroll layar ke paling atas saat menu diklik ===
+        setTimeout(function() {
+        window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+        }, 10);
+       const elemenAnimasi = document.querySelectorAll('.fade-in-element');
+    elemenAnimasi.forEach(function(el) {
+        el.classList.remove('show');
+    });
+    setTimeout(function() {
+        elemenAnimasi.forEach(function(el) {
             el.classList.add('show');
-       });
+        });
     }, 50);
-
-   // Jalankan animasi ketik jika menu Pengalaman dibuka
-    if (halamanId === 'pengalaman') {
-        jalankanAnimasiKetik();
     }
-}
-
-window.onload = function() {
-    bukaHalaman('tentang');
-};
+    
+    window.onload = function() {
+        bukaHalaman('tentang');
+    };
 
 // === FUNGSI ANIMASI MENGETIK PATEN & CEPAT ===
 function jalankanAnimasiKetik() {
