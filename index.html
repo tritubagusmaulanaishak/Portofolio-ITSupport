@@ -211,26 +211,24 @@
         bukaHalaman('tentang');
     };
 
-// === FUNGSI ANIMASI MENGETIK SUPER CEPAT ===
+// === FUNGSI ANIMASI MENGETIK (PERBAIKAN SPASI & ENTER) ===
 function jalankanAnimasiKetik() {
-    // Menargetkan poin-poin list (li) di halaman Pengalaman
-    const listItems = document.querySelectorAll('#pengalaman ul li, .experience-item ul li');
+    const listItems = document.querySelectorAll('#pengalaman li, .experience-item li');
     if (!listItems || listItems.length === 0) return;
 
-    // 1. Simpan teks asli setiap poin agar tidak hilang saat diklik ulang
     listItems.forEach(li => {
+        // Mengubah semua enter/tab/spasi ganda menjadi 1 spasi rapi
         if (!li.dataset.teksAsli) {
-            li.dataset.teksAsli = li.innerText.trim();
+            li.dataset.teksAsli = li.textContent.replace(/\s+/g, ' ').trim();
         }
         if (li.typingTimer) {
             clearInterval(li.typingTimer);
         }
-        li.innerText = ''; // Kosongkan tampilan untuk mulai ketik
+        li.innerText = ''; 
     });
 
     let itemIndex = 0;
 
-    // 2. Ketik teks poin demi poin dengan durasi cepat (8 ms)
     function ketikPoin() {
         if (itemIndex >= listItems.length) return;
 
@@ -245,9 +243,9 @@ function jalankanAnimasiKetik() {
             } else {
                 clearInterval(currentLi.typingTimer);
                 itemIndex++;
-                ketikPoin(); // Lanjut ke poin berikutnya
+                ketikPoin();
             }
-        }, 8); // === KECEPATAN: 8ms (Sangat Cepat) ===
+        }, 8); // Kecepatan ketik (8 ms per karakter)
     }
 
     ketikPoin();
