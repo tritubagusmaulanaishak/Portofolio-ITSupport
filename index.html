@@ -203,15 +203,21 @@
     }, 50);
         
     // Pemanggilan animasi ketik (Di DALAM fungsi bukaHalaman)
-    if (halamanTujuan === 'pengalaman') {
-        setTimeout(jalankanAnimasiKetik, 100);
-        }
     if (halamanTujuan === 'tentang') {
         setTimeout(jalankanAnimasiKetikParagraf, 100);
         setTimeout(jalankanAnimasiPuzzleFoto, 100);
+        }    
+    if (halamanTujuan === 'pengalaman') {
+        setTimeout(jalankanAnimasiKetik, 100);
+        }
+    if (halamanTujuan === 'keahlian'|| halamanTujuan === 'skills') {
+        setTimeout(jalankanAnimasiKeahlian, 100);
         }
     if (halamanTujuan === 'proyek' || halamanTujuan === 'troubleshooting') {
         setTimeout(jalankanAnimasiProyek, 100);
+        }
+    if (halamanTujuan === 'sertifikasi' || halamanTujuan === 'pengalaman') {
+        setTimeout(jalankanAnimasiSertifikasi, 100);
         }
     }
     window.onload = function() {
@@ -400,6 +406,58 @@ function jalankanAnimasiPuzzleFoto() {
         imgEl.style.opacity = '1';
         pieces.forEach(p => p.remove());
     }, 4 * 120 + 600);
+}
+
+    // === FUNGSI ANIMASI MUNCUL BERURUTAN (SERTIFIKASI PROFESIONAL) ===
+function jalankanAnimasiSertifikasi() {
+    // Menargetkan item baris/daftar sertifikasi
+    const items = document.querySelectorAll('#sertifikasi li, .cert-item, #sertifikasi p, #pengalaman li');
+    
+    // Jika tidak memakai li, cari elemen anak di dalam container sertifikasi
+    const targetItems = items.length > 0 ? items : document.querySelectorAll('#sertifikasi .container > *');
+
+    if (!targetItems || targetItems.length === 0) return;
+
+    // 1. Reset posisi awal (transparan & geser sedikit ke kiri/bawah)
+    targetItems.forEach(item => {
+        item.style.opacity = '0';
+        item.style.transform = 'translateX(-30px)'; // Efek meluncur dari kiri
+        item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    });
+
+    // 2. Munculkan satu per satu secara berurutan
+    targetItems.forEach((item, index) => {
+        setTimeout(() => {
+            item.style.opacity = '1';
+            item.style.transform = 'translateX(0)';
+        }, index * 300); // Jeda 300ms (0.3 detik) antar baris
+    });
+}
+
+    // === FUNGSI ANIMASI MUNCUL SATU PER SATU (KEAHLIAN UTAMA) ===
+function jalankanAnimasiKeahlian() {
+    // Menargetkan semua kotak/kartu keahlian
+    const cards = document.querySelectorAll('#keahlian .card, #skills .card, .skill-card, #keahlian .container > div');
+    
+    // Jika tidak memakai class .card, ambil semua div anak dalam section keahlian
+    const targetCards = cards.length > 0 ? cards : document.querySelectorAll('#keahlian > div, #skills > div');
+
+    if (!targetCards || targetCards.length === 0) return;
+
+    // 1. Reset posisi awal (transparan & sedikit mengecil/turun ke bawah)
+    targetCards.forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(30px) scale(0.95)';
+        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    });
+
+    // 2. Munculkan satu per satu secara berurutan
+    targetCards.forEach((card, index) => {
+        setTimeout(() => {
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0) scale(1)';
+        }, index * 200); // Jeda 200ms (0.2 detik) antar kotak keahlian
+    });
 }
     
     const daftarFoto = [
