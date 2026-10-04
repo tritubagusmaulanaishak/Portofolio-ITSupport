@@ -312,7 +312,7 @@ function jalankanAnimasiProyek() {
     targetCards.forEach(card => {
         card.style.opacity = '0';
         card.style.transform = 'translateY(40px)';
-        card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        card.style.transition = 'opacity 1s ease, transform 1s ease';
     });
 
     // 2. Munculkan satu per satu secara berurutan dengan jeda waktu
@@ -320,7 +320,7 @@ function jalankanAnimasiProyek() {
         setTimeout(() => {
             card.style.opacity = '1';
             card.style.transform = 'translateY(0)';
-        }, index * 200); // Jeda 200ms (0.2 detik) antar kotak
+        }, index * 400); // Jeda 200ms (0.2 detik) antar kotak
     });
 }
     const daftarFoto = [
