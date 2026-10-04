@@ -481,3 +481,78 @@ section {
     }
 }
 
+/* Layout Kontainer Dua Kolom Berdampingan (Samping-sampingan) */
+.about-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    padding: 20px 0;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* Pengaturan Foto Profil */
+.about-photo .profile-img {
+    width: 220px;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+    display: block;
+    margin: 0 !important;
+}
+
+/* Area Teks Keterangan Bersusun Ke Bawah */
+.about-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column; /* Memaksa tulisan bersusun ke bawah */
+    align-items: flex-start;  /* Rata kiri */
+    text-align: left;
+}
+
+/* 1. Tulisan "My Name" */
+.about-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+}
+
+/* 2. Nama Utama (Biru Muda/Cyan) */
+.about-name {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #38bdf8; /* Warna biru muda */
+    margin-bottom: 12px;
+    line-height: 1.2;
+}
+
+/* 3. Subtitle Spesialisasi */
+.about-text .subtitle {
+    font-size: 1rem;
+    color: #94a3b8; /* Warna abu-abu terang */
+    margin-bottom: 16px;
+    font-weight: 500;
+}
+
+/* 4. Deskripsi Paragraf */
+.about-text .description {
+    font-size: 0.95rem;
+    color: #e2e8f0;
+    line-height: 1.6;
+    max-width: 650px;
+}
+
+/* Tampilan Responsif (Otomatis Atas-Bawah saat dibuka di HP) */
+@media (max-width: 768px) {
+    .about-container {
+        flex-direction: column;
+        text-align: center;
+    }
+    .about-text {
+        align-items: center;
+        text-align: center;
+    }
+}
+
