@@ -240,16 +240,23 @@ footer {
     }
 }
 
-/* Tampilan Foto Profil */
+/* === TAMPILAN FOTO PROFIL MODEL NAMETAG / ID CARD === */
 .profile-img {
-    width: 180px;
-    height: 180px;
-    border-radius: 50%; /* Membuat foto jadi lingkaran */
+    width: 200px;                 /* Lebar kartu ID */
+    height: 270px;                /* Tinggi kartu ID (rasio portrait) */
     object-fit: cover;
-    display: block;
-    border: 3px solid #38bdf8; /* Garis tepi biru neon */
-    margin: 0 auto 20px auto;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    border-radius: 14px;          /* Sudut melengkung rapi khas ID Card */
+    border: 3px solid #00d2ff;    /* Frame garis biru neon */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 210, 255, 0.3);
+    transition: all 0.4s ease;
+}
+
+/* Container puzzle agar potongan gambar presisi */
+.puzzle-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 200px;
+    height: 270px;
 }
 
 /* Styling untuk Galeri Foto */
