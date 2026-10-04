@@ -435,3 +435,49 @@ section {
     opacity: 1;
     transform: translateY(0); /* Kembali ke posisi normal */
 }
+
+/* Layout Dua Kolom (Samping-sampingan) */
+.about-container {
+    display: flex;
+    align-items: center;       /* Membuat foto dan teks rata tengah secara vertikal */
+    justify-content: center;  /* Mengatur posisi di tengah halaman */
+    gap: 40px;                 /* Jarak antara foto dan teks */
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: left;          /* Teks menjadi rata kiri agar rapi */
+}
+
+/* Mematikan margin auto pada foto agar posisi flexbox tidak terdorong */
+.profile-img, .puzzle-wrapper {
+    margin: 0 !important;
+}
+
+/* Area Teks Keterangan */
+.about-text {
+    flex: 1;                   /* Mengambil sisa ruang di sebelah kanan foto */
+}
+
+.about-text h2 {
+    margin-bottom: 5px;
+}
+
+.about-text h1 {
+    color: #38bdf8;            /* Warna biru neon nama */
+    margin-bottom: 10px;
+}
+
+.about-text h3 {
+    font-size: 0.95rem;
+    opacity: 0.8;
+    margin-bottom: 15px;
+}
+
+/* Tampilan Responsif (Untuk Layar HP / Tablet) */
+@media (max-width: 768px) {
+    .about-container {
+        flex-direction: column; /* Kembali menumpuk atas-bawah saat dibuka di HP */
+        text-align: center;
+    }
+}
+
