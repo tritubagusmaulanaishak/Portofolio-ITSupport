@@ -209,6 +209,9 @@
     if (halamanTujuan === 'tentang') {
         setTimeout(jalankanAnimasiKetikParagraf, 100);
         }
+    if (halamanTujuan === 'proyek' || halamanTujuan === 'troubleshooting') {
+        setTimeout(jalankanAnimasiProyek, 100);
+        }
     }
     window.onload = function() {
         bukaHalaman('tentang');
@@ -295,7 +298,31 @@ function jalankanAnimasiKetikParagraf() {
         }
     }, 20);
 }
+    // === FUNGSI ANIMASI MUNCUL PER KOTAK (PROYEK & TROUBLESHOOTING) ===
+function jalankanAnimasiProyek() {
+    // Menargetkan semua kotak/kartu proyek
+    const cards = document.querySelectorAll('#proyek .card, #proyek .project-card, .project-card, #troubleshooting .card');
     
+    // Jika elemen tidak ditemukan dengan class di atas, cari semua div anak di dalam container
+    const targetCards = cards.length > 0 ? cards : document.querySelectorAll('#proyek .container > div, #troubleshooting .container > div');
+    
+    if (!targetCards || targetCards.length === 0) return;
+
+    // 1. Reset semua kotak menjadi transparan dan agak turun ke bawah
+    targetCards.forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(40px)';
+        card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    });
+
+    // 2. Munculkan satu per satu secara berurutan dengan jeda waktu
+    targetCards.forEach((card, index) => {
+        setTimeout(() => {
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+        }, index * 200); // Jeda 200ms (0.2 detik) antar kotak
+    });
+}
     const daftarFoto = [
         'galeri/kegiatan1.jpeg',
         'galeri/kegiatan2.jpeg',
