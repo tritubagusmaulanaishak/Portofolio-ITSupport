@@ -206,6 +206,9 @@
     if (halamanTujuan === 'pengalaman') {
         setTimeout(jalankanAnimasiKetik, 100);
         }
+    if (halamanTujuan === 'tentang') {
+        setTimeout(jalankanAnimasiKetikParagraf, 100);
+        }
     }
     window.onload = function() {
         bukaHalaman('tentang');
@@ -261,6 +264,36 @@ function jalankanAnimasiKetik() {
     }
 
     ketikPoin();
+}
+
+    // === FUNGSI ANIMASI MENGETIK UNTUK PARAGRAF DESKRIPSI ===
+function jalankanAnimasiKetikParagraf() {
+    const deskripsiEl = document.querySelector('#tentang p, .about-text, .profile-description');
+    if (!deskripsiEl) return;
+
+    if (!deskripsiEl.dataset.teksPaten) {
+        const teksAwal = deskripsiEl.textContent || deskripsiEl.innerText || '';
+        deskripsiEl.dataset.teksPaten = teksAwal.replace(/\s+/g, ' ').trim();
+    }
+
+    if (deskripsiEl.typingTimer) {
+        clearInterval(deskripsiEl.typingTimer);
+    }
+
+    deskripsiEl.textContent = '';
+    const teksLengkap = deskripsiEl.dataset.teksPaten || '';
+    let charIndex = 0;
+
+    if (!teksLengkap) return;
+
+    deskripsiEl.typingTimer = setInterval(() => {
+        if (charIndex < teksLengkap.length) {
+            charIndex++;
+            deskripsiEl.textContent = teksLengkap.slice(0, charIndex);
+        } else {
+            clearInterval(deskripsiEl.typingTimer);
+        }
+    }, 6);
 }
     
     const daftarFoto = [
