@@ -208,6 +208,7 @@
         }
     if (halamanTujuan === 'tentang') {
         setTimeout(jalankanAnimasiKetikParagraf, 100);
+        setTimeout(jalankanAnimasiPuzzleFoto, 100);
         }
     if (halamanTujuan === 'proyek' || halamanTujuan === 'troubleshooting') {
         setTimeout(jalankanAnimasiProyek, 100);
@@ -323,6 +324,84 @@ function jalankanAnimasiProyek() {
         }, index * 400); // Jeda 200ms (0.2 detik) antar kotak
     });
 }
+    // === FUNGSI ANIMASI PUZZLE TERSUSUN UNTUK FOTO NAMETAG ===
+function jalankanAnimasiPuzzleFoto() {
+    const imgEl = document.querySelector('#tentang .profile-img');
+    if (!imgEl) return;
+
+    // 1. Bungkus foto dengan container puzzle jika belum ada
+    let wrapper = imgEl.parentElement;
+    if (!wrapper.classList.contains('puzzle-wrapper')) {
+        wrapper = document.createElement('div');
+        wrapper.className = 'puzzle-wrapper';
+        imgEl.parentNode.insertBefore(wrapper, imgEl);
+        wrapper.appendChild(imgEl);
+    }
+
+    // 2. Sembunyikan foto utama sementara & hapus potongan puzzle lama jika ada
+    imgEl.style.opacity = '0';
+    const oldPieces = wrapper.querySelectorAll('.puzzle-piece');
+    oldPieces.forEach(p => p.remove());
+
+    const imgSrc = imgEl.src;
+    const pieceWidth = 100; // 2x2 grid (200px / 2)
+    const pieceHeight = 135; // (270px / 2)
+
+    // Posisi acak sebar untuk efek puzzle terpisah (Atas-Kiri, Atas-Kanan, Bawah-Kiri, Bawah-Kanan)
+    const scatterOffsets = [
+        { x: -80, y: -80, r: -25 },
+        { x: 80, y: -80, r: 20 },
+        { x: -80, y: 80, r: -15 },
+        { x: 80, y: 80, r: 25 }
+    ];
+
+    const pieces = [];
+
+    // 3. Buat 4 kepingan puzzle (2x2 grid)
+    for (let row = 0; row < 2; row++) {
+        for (let col = 0; col < 2; col++) {
+            const index = row * 2 + col;
+            const piece = document.createElement('div');
+            piece.className = 'puzzle-piece';
+            
+            // Set style kepingan puzzle
+            Object.assign(piece.style, {
+                position: 'absolute',
+                width: pieceWidth + 'px',
+                height: pieceHeight + 'px',
+                left: (col * pieceWidth) + 'px',
+                top: (row * pieceHeight) + 'px',
+                backgroundImage: `url("${imgSrc}")`,
+                backgroundSize: '200px 270px',
+                backgroundPosition: `-${col * pieceWidth}px -${row * pieceHeight}px`,
+                borderRadius: '8px',
+                border: '1px solid rgba(0, 210, 255, 0.5)',
+                boxShadow: '0 5px 15px rgba(0,0,0,0.5)',
+                transition: 'all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+                opacity: '0',
+                transform: `translate(${scatterOffsets[index].x}px, ${scatterOffsets[index].y}px) rotate(${scatterOffsets[index].r}deg)`
+            });
+
+            wrapper.appendChild(piece);
+            pieces.push(piece);
+        }
+    }
+
+    // 4. Animasikan potongan puzzle agar menyatu (tersusun) satu per satu
+    pieces.forEach((piece, index) => {
+        setTimeout(() => {
+            piece.style.opacity = '1';
+            piece.style.transform = 'translate(0, 0) rotate(0deg)';
+        }, index * 120); // Jeda 120ms tiap kepingan
+    });
+
+    // 5. Setelah semua puzzle tersusun rapi, tampilkan kembali foto utama ID Card utuh
+    setTimeout(() => {
+        imgEl.style.opacity = '1';
+        pieces.forEach(p => p.remove());
+    }, 4 * 120 + 600);
+}
+    
     const daftarFoto = [
         'galeri/kegiatan1.jpeg',
         'galeri/kegiatan2.jpeg',
