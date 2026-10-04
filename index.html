@@ -216,7 +216,7 @@
     if (halamanTujuan === 'proyek' || halamanTujuan === 'troubleshooting') {
         setTimeout(jalankanAnimasiProyek, 100);
         }
-    if (halamanTujuan === 'sertifikasi' || halamanTujuan === 'pengalaman') {
+    if (halamanTujuan === 'sertifikasi' || halamanTujuan === 'sertifikat') {
         setTimeout(jalankanAnimasiSertifikasi, 100);
         }
     }
@@ -411,10 +411,10 @@ function jalankanAnimasiPuzzleFoto() {
     // === FUNGSI ANIMASI MUNCUL BERURUTAN (SERTIFIKASI PROFESIONAL) ===
 function jalankanAnimasiSertifikasi() {
     // Menargetkan item baris/daftar sertifikasi
-    const items = document.querySelectorAll('#sertifikasi li, .cert-item, #sertifikasi p, #pengalaman li');
+    const items = document.querySelectorAll('#sertifikasi li, #sertifikat li, .cert-item, #sertifikasi p, #sertifikat p, #sertifikasi div, #sertifikat div');
     
     // Jika tidak memakai li, cari elemen anak di dalam container sertifikasi
-    const targetItems = items.length > 0 ? items : document.querySelectorAll('#sertifikasi .container > *');
+    const targetItems = items.length > 0 ? items : document.querySelectorAll('#sertifikasi .container > *, #sertifikat .container > *, #sertifikasi > *, #sertifikat > *');
 
     if (!targetItems || targetItems.length === 0) return;
 
