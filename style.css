@@ -556,3 +556,45 @@ section {
     }
 }
 
+/* ==========================================
+   NAVIGASI MOBILE (Scroll & Tombol Panah)
+   ========================================== */
+.nav-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+#navLinks {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  white-space: nowrap;
+  scrollbar-width: none; /* Firefox */
+}
+
+#navLinks::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge */
+}
+
+#navLinks ul {
+  display: flex;
+  gap: 15px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  align-items: center;
+}
+
+.nav-btn {
+  background: rgba(255, 255, 255, 0.1);
+  color: #38bdf8;
+  border: 1px solid #38bdf8;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-weight: bold;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
