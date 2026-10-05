@@ -557,44 +557,58 @@ section {
 }
 
 /* ==========================================
-   NAVIGASI MOBILE (Scroll & Tombol Panah)
+   NAVIGASI RESPONSIF (DESKTOP & MOBILE)
    ========================================== */
-.nav-container {
+.nav-wrapper {
   display: flex;
   align-items: center;
-  gap: 8px;
-  width: 100%;
+  gap: 10px;
 }
 
-#navLinks {
-  display: flex;
-  overflow-x: auto;
-  scroll-behavior: smooth;
-  white-space: nowrap;
-  scrollbar-width: none; /* Firefox */
-}
-
-#navLinks::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Edge */
-}
-
-#navLinks ul {
-  display: flex;
-  gap: 15px;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  align-items: center;
-}
-
+/* Sembunyikan tombol panah di layar Laptop / Komputer */
 .nav-btn {
-  background: rgba(255, 255, 255, 0.1);
-  color: #38bdf8;
-  border: 1px solid #38bdf8;
-  border-radius: 6px;
-  padding: 4px 10px;
-  font-weight: bold;
-  cursor: pointer;
-  flex-shrink: 0;
+  display: none;
 }
 
+/* Aturan Khusus Tampilan HP (Lebar Layar <= 768px) */
+@media (max-width: 768px) {
+  .nav-wrapper {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  /* Munculkan tombol panah hanya di HP */
+  .nav-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+    color: #38bdf8;
+    border: 1px solid #38bdf8;
+    border-radius: 6px;
+    padding: 4px 8px;
+    font-weight: bold;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  #navLinks {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    white-space: nowrap;
+    scrollbar-width: none; /* Sembunyikan scrollbar Firefox */
+  }
+
+  #navLinks::-webkit-scrollbar {
+    display: none; /* Sembunyikan scrollbar Chrome/Safari/Edge */
+  }
+
+  #navLinks ul {
+    display: flex;
+    gap: 10px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+}
