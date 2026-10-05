@@ -15,17 +15,19 @@
     <header>
         <div class="container nav-container">
             <h1 class="logo">Tri Tubagus<span>@ITSupport</span></h1>
+            <button class="nav-btn" id="btnLeft">&lt;</button>
             <nav>
-                <ul>
-                    <li><a href="#tentang" onclick="bukaHalaman('tentang')">Tentang</a></li>
-                    <li><a href="#keahlian" onclick="bukaHalaman('keahlian')">Keahlian</a></li>
-                    <li><a href="#foto" onclick="bukaHalaman('foto')">Foto</a></li>
-                    <li><a href="#pengalaman" onclick="bukaHalaman('pengalaman')">Pengalaman</a></li>
-                    <li><a href="#proyek" onclick="bukaHalaman('proyek')">Proyek &amp; Troubleshooting</a></li>
-                    <li><a href="#sertifikat" onclick="bukaHalaman('sertifikat')">Sertifikat</a></li>
-                    <li><a href="#kontak" class="btn-nav">Kontak</a></li>
-                </ul>
+              <ul id="navLinks">
+                <li><a href="#tentang" onclick="bukaHalaman('tentang')">Tentang</a></li>
+                <li><a href="#keahlian" onclick="bukaHalaman('keahlian')">Keahlian</a></li>
+                <li><a href="#foto" onclick="bukaHalaman('foto')">Foto</a></li>
+                <li><a href="#pengalaman" onclick="bukaHalaman('pengalaman')">Pengalaman</a></li>
+                <li><a href="#proyek" onclick="bukaHalaman('proyek')">Proyek &amp; Troubleshooting</a></li>
+                <li><a href="#sertifikat" onclick="bukaHalaman('sertifikat')">Sertifikat</a></li>
+                <li><a href="#kontak" class="btn-nav">Kontak</a></li>
+              </ul>
             </nav>
+            <button class="nav-btn" id="btnRight">&gt;</button>
         </div>
     </header>
 
@@ -314,7 +316,20 @@ function jalankanAnimasiKetikParagraf() {
         }
     }, 20);
 }
-    // === FUNGSI ANIMASI MUNCUL PER KOTAK (PROYEK & TROUBLESHOOTING) ===
+    const navLinks = document.getElementById('navLinks');
+const btnLeft = document.getElementById('btnLeft');
+const btnRight = document.getElementById('btnRight');
+
+if (navLinks && btnLeft && btnRight) {
+  btnLeft.addEventListener('click', () => {
+    navLinks.scrollBy({ left: -150, behavior: 'smooth' });
+  });
+
+  btnRight.addEventListener('click', () => {
+    navLinks.scrollBy({ left: 150, behavior: 'smooth' });
+  });
+
+        // === FUNGSI ANIMASI MUNCUL PER KOTAK (PROYEK & TROUBLESHOOTING) ===
 function jalankanAnimasiProyek() {
     // Menargetkan semua kotak/kartu proyek
     const cards = document.querySelectorAll('#proyek .card, #proyek .project-card, .project-card, #troubleshooting .card');
